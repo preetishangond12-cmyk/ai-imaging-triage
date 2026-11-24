@@ -1,0 +1,22 @@
+.venv/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.npy
+*.log
+.env
+.env.*
+!.env.example
+
+/archive (3)/
+/dataa/
+/dataset/processed/
+/dataset/chexpert/**
+!/dataset/chexpert/
+!/dataset/chexpert/*.py
+/research paper ai triage.pdf
+/.vscode/tasks.json

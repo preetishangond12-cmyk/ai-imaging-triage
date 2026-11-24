@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radiograph Triage Desk</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">EDGE-AI / RADIOLOGY WORKSPACE</p>
+        <h1>Radiograph Triage Desk</h1>
+      </div>
+      <div class="system-status"><span id="status-dot"></span><span id="status-text">Checking model</span></div>
+    </header>
+
+    <section class="intro">
+      <div>
+        <p class="kicker">Clinical review queue</p>
+        <h2>Turn one chest image into a reviewable priority.</h2>
+        <p class="lede">Upload a frontal radiograph to inspect model probabilities, confidence-aware risk, and the regions that shaped the prediction.</p>
+      </div>
+      <div class="protocol"><span>01</span><strong>Upload</strong><span>02</span><strong>Analyze</strong><span>03</span><strong>Review</strong></div>
+    </section>
+
+    <section class="workspace">
+      <div class="upload-panel">
+        <form id="upload-form">
+          <label class="dropzone" id="dropzone" for="file-input">
+            <input id="file-input" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+            <span class="drop-mark">+</span>
+            <strong>Drop a radiograph here</strong>
+            <span>or choose a PNG, JPEG, or WebP image</span>
+          </label>
+          <button class="primary-button" type="submit" id="analyze-button" disabled>Analyze image</button>
+        </form>
+        <p class="privacy-note">Images are sent to the research API for processing. Do not upload patient-identifiable images or use this prototype as a diagnosis.</p>
+        <p class="error" id="error-message" hidden></p>
+      </div>
+
+      <div class="image-panel">
+        <div class="panel-heading"><span>IMAGE EVIDENCE</span><span id="filename">Waiting for image</span><button class="heatmap-toggle" id="heatmap-toggle" type="button" aria-pressed="true" hidden>Hide heatmap</button></div>
+        <div class="image-stage" id="image-stage"><div class="empty-stage">Your image and Grad-CAM explanation will appear here.</div><img id="source-image" alt="Uploaded radiograph" hidden><canvas id="heatmap-canvas" hidden></canvas></div>
+        <div class="legend"><span><i class="cool"></i> lower contribution</span><span><i class="hot"></i> higher contribution</span></div>
+      </div>
+
+      <aside class="result-panel">
+        <div class="panel-heading"><span>TRIAGE OUTPUT</span><span id="result-time">--</span></div>
+        <div class="priority-block"><span class="priority-label">PRIORITY</span><strong id="priority">--</strong><span id="finding">Run analysis to populate</span></div>
+        <div class="metrics"><div><span>Risk score</span><strong id="risk">--</strong></div><div><span>Confidence</span><strong id="confidence">--</strong></div><div><span>Severity</span><strong id="severity">--</strong></div></div>
+        <div class="probability-list" id="probabilities"><p class="muted">Finding probabilities will be listed here.</p></div>
+        <button class="secondary-button" id="llm-report-button" type="button" disabled>Generate local review note</button>
+        <section class="llm-report" id="llm-report" hidden>
+          <span class="llm-label">LOCAL LLM REVIEW</span>
+          <p id="llm-report-text"></p>
+        </section>
+        <p class="mode-label" id="mode-label">Research prototype</p>
+        <p class="disclaimer" id="disclaimer">Clinical review is required for every result.</p>
+      </aside>
+    </section>
+  </main>
+  <script src="app.js?v=heatmap-overlay-2"></script>
+</body>
+</html>
